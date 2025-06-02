@@ -1,0 +1,12 @@
+[package]
+name = "superstate"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies.bevy_ecs]
+version = "0.16"
+default-features = false
+
+[dependencies.bevy_app]
+version = "0.16"
+default-features = false
