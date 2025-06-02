@@ -1,5 +1,6 @@
 use std::marker::PhantomData;
 
+use bevy_app::App;
 use bevy_ecs::{
     bundle::Bundle,
     component::{Component, ComponentId},
@@ -87,6 +88,10 @@ pub mod hooks {
     }
 }
 
+pub fn superstate_plugin<Super: Component, States: Bundle>(app: &mut App) {
+    register_hooks::<Super, States>(app.world_mut()).unwrap();
+}
+
 pub fn register_hooks<Super: Component, States: Bundle>(
     world: &mut World,
 ) -> Result<(), BevyError> {
@@ -122,13 +127,13 @@ pub struct SuperstateInfo<S: Component> {
 
 impl<S: Component> SuperstateInfo<S> {
     fn remove_by_id(&mut self, id: ComponentId) {
-        let index = self
+        if let Some((index, _)) = self
             .states_on_entity
             .iter()
             .enumerate()
             .find(|(_, _id)| **_id == id)
-            .unwrap()
-            .0;
-        self.states_on_entity.swap_remove(index);
+        {
+            self.states_on_entity.swap_remove(index);
+        }
     }
 }
