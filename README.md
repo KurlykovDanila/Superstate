@@ -3,7 +3,7 @@
 `Superstate` is a simple and easy to use bevy ecs plugin of typed states and super states of entity components.
 
 ## Problem
-When we have a component responsible for a state, we have two ways, the first one is that one component is responsible for one state, which means we have to express it using enams:
+When we have a component responsible for a state, we have two ways, the first one is that one component is responsible for one state, which means we have to express it using enums:
 ```rust
 #[derive(Component)]
 enum Movement{
@@ -55,7 +55,7 @@ fn change_state_system(mut cmd: Commands, q: Single<(Entity, Or<(With<Walking>, 
 ```
 
 ## Solution
-The solution is component hooks and dependent components. Make states dependent on a super state.
+The solution is component hooks and required components. Make superstate requried of states.
 ```rust
 use superstate::{SuperstateInfo};
 
