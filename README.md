@@ -2,6 +2,14 @@
 
 `Superstate` is a simple and easy to use bevy ecs plugin of typed states and super states of entity components.
 
+## Installation
+Add superstate as a dependency to Cargo.toml:
+```toml
+[dependencies]
+superstate = { git = "https://github.com/KurlykovDanila/Superstate.git" }
+```
+Now the crate is not published on crates.io
+
 ## Problem
 When we have a component responsible for a state, we have two ways, the first one is that one component is responsible for one state, which means we have to express it using enums:
 ```rust
@@ -14,12 +22,12 @@ enum Movement{
 ```
 and later use this component in a similar way (forced to check its value every time):
 ```rust
-fn running_system(q: Single<(Entity, &MovementState)>) {
+fn running_system(q: Single<(Entity, &Movement)>) {
     let (e, move_state) = q.into_inner();
     // forced to do a check in each such system, 
     // and if there are dozens of states? it looks very dirty
     match move_state {
-        MovementState::Moving(MovingSubstate::Running) => {///running logic}
+        Movement::Running => {///running logic}
         _ => {}
     }
 } 
